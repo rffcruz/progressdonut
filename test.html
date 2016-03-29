@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="rc-circular-pc.js" type="text/javascript"></script>
+        <script src="rc-progressdonut.js" type="text/javascript"></script>
+        <script>
+        
+        window.onload=function(){
+            document.getElementById('btn-anim1').addEventListener('click',function(){
+                document.getElementById('plateau').innerHTML='';
+                new progressDonut({barSize:30,size:200}).appendTo("plateau").animate({value:15});
+                new progressDonut({barSize:30,size:200}).appendTo("plateau").animate({value:55});
+                new progressDonut({barSize:30,size:200}).appendTo("plateau").animate({value:73});    
+                });
+            document.getElementById('btn-anim2').addEventListener('click',function(){
+                document.getElementById('plateau').innerHTML='';
+                new progressDonut({
+                    barSize:30,
+                    size:200,
+                    complete: function(){
+                        new progressDonut({
+                            barSize:30,
+                            size:200,
+                            complete: function(){
+                                new progressDonut({barSize:30,size:200}).appendTo("plateau").animate({value:73});
+                            }
+                        }).appendTo("plateau").animate({value:55});
+                    }
+                }).appendTo("plateau").animate({value:15});
+                });
+            
+        }
+        </script>
     </head>
     <body>
-        <div id="pc-main">
-        </div>
+        <input type="button" value="manual" id="btn-manual" />
+        <input type="button" value="animated 3 async" id="btn-anim1" />
+        <input type="button" value="animated 3 sync" id="btn-anim2" />
+        <div id="plateau"></div>
            
     </body>
 </html>
